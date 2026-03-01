@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCQ Marker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- START SCREEN -->
+<div class="start-screen" id="startScreen">
+  <h1>MCQ Marker</h1>
+  <p>How many questions do you want to attempt?</p>
+
+  <div class="start-options">
+    <button onclick="startTest(50)">50</button>
+    <button onclick="startTest(80)">80</button>
+    <button onclick="startTest(100)">100</button>
+  </div>
+
+  <input
+    type="number"
+    id="customCount"
+    placeholder="Custom number"
+    min="1"
+    max="200"
+  />
+  <button class="start-btn" onclick="startCustom()">Start Test</button>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" style="display:none;">
+
+  <div class="top-bar">
+    <div class="filters">
+      <button class="active" onclick="setFilter('all', this)">All</button>
+      <button onclick="setFilter('attempted', this)">Attempted</button>
+      <button onclick="setFilter('unattempted', this)">Unattempted</button>
+      <button onclick="setFilter('review', this)">Mark for Review</button>
+    </div>
+
+    <div class="status-wrapper">
+      <div class="progress-ring">
+        <svg width="70" height="70">
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#38bdf8"/>
+              <stop offset="100%" stop-color="#6366f1"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-bg" cx="35" cy="35" r="30"></circle>
+          <circle class="ring-progress" cx="35" cy="35" r="30"></circle>
+        </svg>
+        <div class="ring-text" id="progressText">0%</div>
+      </div>
+
+      <div class="status-bar">
+        <div>Attempted: <span id="attempted">0</span></div>
+        <div>Unattempted: <span id="unattempted">0</span></div>
+        <div>Review: <span id="reviewCount">0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="questions"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
