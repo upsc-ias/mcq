@@ -1,0 +1,233 @@
+:root {
+  --bg: #020617;
+  --card: #0f172a;
+  --border: #1e293b;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --accent1: #38bdf8;
+  --accent2: #6366f1;
+  --review: #fbbf24;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* ---------- START SCREEN ---------- */
+.start-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.start-screen h1 {
+  font-size: 32px;
+}
+
+.start-options {
+  display: flex;
+  gap: 14px;
+}
+
+.start-options button,
+.start-btn {
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #020617;
+  color: var(--accent1);
+  cursor: pointer;
+  font-size: 15px;
+}
+
+#customCount {
+  margin-top: 10px;
+  width: 200px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #020617;
+  color: var(--text);
+  text-align: center;
+}
+
+/* ---------- TOP BAR ---------- */
+.top-bar {
+  position: sticky;
+  top: 0;
+  background: rgba(2,6,23,0.96);
+  padding: 14px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  z-index: 100;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.filters button {
+  background: #020617;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 8px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.filters button.active {
+  background: rgba(99,102,241,0.2);
+  color: var(--accent2);
+  border-color: var(--accent2);
+}
+
+/* ---------- STATUS ---------- */
+.status-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.status-bar {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------- PROGRESS RING ---------- */
+.progress-ring {
+  position: relative;
+  width: 70px;
+  height: 70px;
+}
+
+.progress-ring svg {
+  transform: rotate(-90deg);
+}
+
+.ring-bg {
+  fill: none;
+  stroke: #020617;
+  stroke-width: 8;
+}
+
+.ring-progress {
+  fill: none;
+  stroke: url(#gradient);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 188;
+  stroke-dashoffset: 188;
+  transition: stroke-dashoffset 0.4s ease;
+}
+
+.ring-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--accent1);
+}
+
+/* ---------- QUESTIONS ---------- */
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 16px;
+}
+
+.question {
+  background: linear-gradient(180deg, var(--card), #020617);
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  margin-bottom: 14px;
+}
+
+.q-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+/* ---------- REVIEW BUTTON ---------- */
+.review-btn {
+  padding: 8px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+  background: transparent;
+  border: 2px solid var(--review);
+  color: var(--review);
+  cursor: pointer;
+}
+
+.review-btn.active {
+  background: var(--review);
+  color: #020617;
+}
+
+/* ---------- OPTIONS ---------- */
+.options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.option {
+  width: 64px;
+  height: 64px;
+  margin: auto;
+  border-radius: 50%;
+  background: #020617;
+  border: 2px solid var(--border);
+  color: var(--muted);
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.option.selected {
+  background: radial-gradient(circle at top, #60a5fa, #6366f1);
+  color: #020617;
+  border-color: #818cf8;
+  box-shadow: 0 0 14px rgba(99,102,241,0.45);
+}
+
+/* ---------- MOBILE ---------- */
+@media (max-width: 600px) {
+  .options {
+    grid-template-columns: repeat(4, 1fr); /* 4 in one row */
+    gap: 10px; /* optional: reduce spacing for mobile */
+  }
+
+  .option {
+    width: 35px;  /* slightly smaller for mobile */
+    height: 35px;
+    font-size: 12px;
+  }
+  html {
+    font-size: 12px;
+  }
+}
