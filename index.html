@@ -1,72 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MCQ Marker</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-<!-- START SCREEN -->
-<div class="start-screen" id="startScreen">
-  <h1>MCQ Marker</h1>
-  <p>How many questions do you want to attempt?</p>
-
-  <div class="start-options">
-    <button onclick="startTest(50)">50</button>
-    <button onclick="startTest(80)">80</button>
-    <button onclick="startTest(100)">100</button>
-  </div>
-
-  <input
-    type="number"
-    id="customCount"
-    placeholder="Custom number"
-    min="1"
-    max="200"
-  />
-  <button class="start-btn" onclick="startCustom()">Start Test</button>
-</div>
-
-<!-- MAIN APP -->
-<div id="app" style="display:none;">
-
-  <div class="top-bar">
-    <div class="filters">
-      <button class="active" onclick="setFilter('all', this)">All</button>
-      <button onclick="setFilter('attempted', this)">Attempted</button>
-      <button onclick="setFilter('unattempted', this)">Unattempted</button>
-      <button onclick="setFilter('review', this)">Mark for Review</button>
-    </div>
-
-    <div class="status-wrapper">
-      <div class="progress-ring">
-        <svg width="70" height="70">
-          <defs>
-            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#38bdf8"/>
-              <stop offset="100%" stop-color="#6366f1"/>
-            </linearGradient>
-          </defs>
-          <circle class="ring-bg" cx="35" cy="35" r="30"></circle>
-          <circle class="ring-progress" cx="35" cy="35" r="30"></circle>
-        </svg>
-        <div class="ring-text" id="progressText">0%</div>
-      </div>
-
-      <div class="status-bar">
-        <div>Attempted: <span id="attempted">0</span></div>
-        <div>Unattempted: <span id="unattempted">0</span></div>
-        <div>Review: <span id="reviewCount">0</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container" id="questions"></div>
-</div>
-
-<script src="script.js"></script>
-</body>
-</html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101112">
+<title>MCQ Marker</title>
+<style>
+:root{color-scheme:dark;--bg:#101112;--panel:#17191b;--panel2:#1d2023;--line:#2b2f32;--muted:#8b9297;--text:#edf0f1;--green:#68d6a0;--red:#ff777d;--amber:#e7b75e;--accent:#a9b5be}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -25%,#202426 0,transparent 55%),var(--bg);color:var(--text);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}.shell{width:min(1280px,100% - 36px);margin:0 auto;padding:32px 0 48px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:25px}.brand{display:flex;align-items:center;gap:12px}.mark{width:34px;height:34px;border:1px solid #394044;border-radius:11px;display:grid;place-items:center;color:var(--green);background:#171c1b;font-weight:800;font-size:17px}.brand h1{font-size:17px;letter-spacing:.04em;margin:0;font-weight:680}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:1px}.actions{display:flex;align-items:center;gap:9px}.saved{font-size:12px;color:#8e9992;display:flex;align-items:center;gap:7px;margin-right:7px}.dot{width:6px;height:6px;border-radius:50%;background:var(--green)}button{font:inherit;color:inherit;cursor:pointer}.iconbtn,.quiet{border:1px solid var(--line);background:#181a1c;border-radius:9px;padding:8px 11px;font-size:12px;color:#c4c9cc;transition:.16s}.iconbtn:hover,.quiet:hover{border-color:#4a5155;background:#202326}.danger{color:#d5a0a1}.progresscard{border:1px solid #282c2f;background:linear-gradient(120deg,#171a1c,#151718);padding:17px 19px 15px;border-radius:13px;margin-bottom:16px}.progresshead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:11px}.progresshead strong{font-size:13px;font-weight:600}.progresshead span{color:var(--muted);font-size:12px}.bar{height:5px;border-radius:9px;background:#2b2e31;overflow:hidden}.fill{height:100%;width:0;background:linear-gradient(90deg,#50c98c,#82e3ae);border-radius:9px;transition:width .2s}.progressfoot{display:flex;justify-content:space-between;color:#858d91;font-size:11px;margin-top:9px}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:0 0 12px;flex-wrap:wrap}.filters,.ranges{display:flex;gap:5px;align-items:center;flex-wrap:wrap}.filter,.range{border:1px solid transparent;background:transparent;color:#92999d;border-radius:8px;padding:7px 10px;font-size:12px;white-space:nowrap}.filter.active,.range.active{background:#202326;border-color:#32383b;color:#e7ebed}.filter em{font-style:normal;color:#687176;margin-left:3px}.range{font-size:11px;padding:6px 9px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(10,minmax(47px,auto));grid-auto-flow:column;gap:7px 14px}.row{min-width:0;min-height:47px;border:1px solid #25292b;background:rgba(23,25,27,.82);border-radius:10px;padding:6px 9px;display:flex;align-items:center;gap:7px;transition:border-color .15s,background .15s}.row:hover{border-color:#383e41}.correctness{width:27px;height:27px;border-radius:50%;border:1px solid #434a4d;background:#1d2022;color:var(--green);display:grid;place-items:center;font-weight:700;font-size:14px;flex:none;padding:0}.correctness.incorrect{color:var(--red);border-color:#754044;background:#291d1f}.correctness:disabled{opacity:.25;cursor:not-allowed}.qnum{width:30px;height:30px;border-radius:9px;border:1px solid #343a3d;background:#202326;color:#92999e;font-weight:650;font-size:12px;padding:0;flex:none}.qnum.correct{color:var(--green);border-color:#315f49;background:#1b2922}.qnum.incorrect{color:var(--red);border-color:#703c40;background:#2a1d1f}.qnum.review{box-shadow:inset 0 0 0 1px var(--amber);border-color:#8b6a32}.row.review{background:#211f1a}.incorrect-toggle{height:29px;padding:0 8px;border-radius:8px;border:1px solid #373c3f;background:#202326;color:#858d91;font-size:10px;white-space:nowrap;flex:none}.incorrect-toggle.active{border-color:#8e484d;background:#321f21;color:#ff969b}.incorrect-toggle:disabled{opacity:.25;cursor:not-allowed}.choices{display:flex;gap:5px;margin-left:0;flex:none}.choice{width:30px;height:30px;border-radius:50%;border:1px solid #3b4144;background:#202326;color:#aab0b3;padding:0;font-size:11px;font-weight:650}.choice:hover{border-color:#707a7f;color:#fff}.choice.selected{background:#264735;border-color:#4ca877;color:#91edba;box-shadow:0 0 0 2px #58bd8330}.row.incorrect-state .choice.selected{background:#482528;border-color:#bd5c62;color:#ffa0a4;box-shadow:0 0 0 2px #e35b6130}.empty{grid-column:1/-1;text-align:center;color:#899095;padding:55px 12px;border:1px dashed #34393c;border-radius:12px}.hint{color:#687176;font-size:11px;margin:14px 2px 0}.footnote{text-align:center;color:#535a5e;font-size:10px;margin-top:29px}
+@media(max-width:650px){.shell{width:calc(100% - 24px);padding-top:19px}.top{margin-bottom:17px}.brand small{display:none}.saved{font-size:0;margin-right:0}.actions{gap:6px}.iconbtn{padding:8px}.progresscard{padding:14px}.toolbar{gap:9px}.filters{width:100%;justify-content:space-between}.filter{padding:7px 7px}.ranges{width:100%}.grid{grid-template-columns:minmax(0,1fr);grid-template-rows:none;grid-auto-flow:row;gap:7px}.row{min-height:46px;gap:7px}.incorrect-toggle{padding:0 7px}.choices{gap:5px}.hint{line-height:1.6}}
+@media(min-width:651px) and (max-width:850px){.shell{width:calc(100% - 32px)}.grid{gap:7px 9px}.row{gap:6px;padding:6px 7px}.correctness{width:25px;height:25px}.qnum{width:28px;height:28px}.incorrect-toggle{height:27px;padding:0 6px;font-size:9px}.choice{width:27px;height:27px}.choices{gap:4px}}
+.grid{--columns:2;grid-template-columns:repeat(var(--columns),minmax(0,1fr));grid-template-rows:repeat(10,minmax(47px,auto));grid-auto-flow:column}
+@media(min-width:651px){.grid{--columns:3}}
+@media(min-width:900px){.grid{--columns:4}}
+@media(min-width:1100px){.grid{--columns:5}}
+@media(max-width:650px){.row{gap:4px;padding:5px 4px}.correctness{width:21px;height:21px;font-size:12px}.qnum{width:23px;height:23px;font-size:10px}.choice{width:21px;height:21px;font-size:9px}.choices{gap:2px}}
+@media(max-width:350px){.row{gap:2px;padding:4px 2px}.correctness{width:18px;height:18px;font-size:10px}.qnum{width:20px;height:20px}.choice{width:18px;height:18px;font-size:8px}}
+.brand{min-width:0}.brand>div:last-child{min-width:0}.brand small{max-width:58ch;line-height:1.35}
+@media(max-width:650px){.top{align-items:flex-start}.brand{align-items:flex-start;flex:1}.brand .mark{flex:none}.brand small{display:block;font-size:9px}.brand h1{font-size:15px}.actions{flex:none}}
+</style></head>
+<body><main class="shell"><header class="top"><div class="brand"><div class="mark" aria-hidden="true">🏆</div><div><h1>MCQ MARKER</h1><small>Choose A–D to mark an answer · Select it again to clear · Click a number to mark for review</small></div></div><div class="actions"><span class="saved" id="saveStatus"><i class="dot"></i> Saved</span><button class="iconbtn danger" id="resetBtn">Reset</button></div></header>
+<section class="progresscard" aria-label="Progress"><div class="progresshead"><strong id="progressTitle">0 of 100 answered</strong><span id="percent">0% complete</span></div><div class="bar"><div class="fill" id="fill"></div></div><div class="progressfoot"><span id="remaining">100 questions remaining</span><span id="reviewTotal">0 for review</span></div></section>
+<nav class="toolbar" aria-label="Question filters and ranges"><div class="filters" id="filters"></div><div class="ranges" id="ranges"></div></nav><section class="grid" id="grid" aria-label="Questions"></section></main>
+<script>
+(()=>{'use strict';const KEY='mcq-marker-v1',LETTERS=['A','B','C','D'],filters=[['all','All'],['attempted','Attempted'],['unattempted','Unattempted'],['review','Review'],['incorrect','Incorrect']];let state={count:100,answers:{},correctness:{},review:{},filter:'all',range:0};const $=id=>document.getElementById(id);
+function load(){try{const x=JSON.parse(localStorage.getItem(KEY));if(x&&typeof x==='object'){state={...state,...x,count:100};state.answers=state.answers||{};state.correctness=state.correctness||{};state.review=state.review||{};state.filter=filters.some(f=>f[0]===state.filter)?state.filter:'all';state.range=Math.max(0,Math.min(4,Number(state.range)||0));for(const map of [state.answers,state.correctness,state.review])for(const n of Object.keys(map))if(+n>100)delete map[n];}}catch(e){}}
+function persist(){const el=$('saveStatus');el.innerHTML='<i class="dot" style="background:#e7b75e"></i> Saving';try{localStorage.setItem(KEY,JSON.stringify(state));el.innerHTML='<i class="dot"></i> Saved';}catch(e){el.textContent='Save unavailable';}}
+function isAnswered(n){return !!state.answers[n]}
+function matches(n){let a=isAnswered(n),r=!!state.review[n],wrong=state.correctness[n]==='incorrect';return state.filter==='all'||(state.filter==='attempted'&&a)||(state.filter==='unattempted'&&!a)||(state.filter==='review'&&r)||(state.filter==='incorrect'&&a&&wrong)}
+let lastColumns=0;function render(){let columns=Math.max(2,Math.min(5,parseInt(getComputedStyle($('grid')).getPropertyValue('--columns'),10)||2)),pageSize=columns*10,pageCount=Math.ceil(state.count/pageSize);if(lastColumns&&columns!==lastColumns){state.range=Math.min(state.range,pageCount-1);persist()}lastColumns=columns;let answered=Object.keys(state.answers).filter(n=>+n<=state.count&&state.answers[n]).length,reviewCount=Object.keys(state.review).filter(n=>+n<=state.count&&state.review[n]).length,p=Math.round(answered/state.count*100);$('progressTitle').textContent=`${answered} of ${state.count} answered`;$('percent').textContent=`${p}% complete`;$('fill').style.width=p+'%';$('remaining').textContent=`${state.count-answered} questions remaining`;$('reviewTotal').textContent=`${reviewCount} for review`;
+let incorrectCount=Object.keys(state.correctness).filter(n=>+n<=state.count&&state.answers[n]&&state.correctness[n]==='incorrect').length;let counts={all:state.count,attempted:answered,unattempted:state.count-answered,review:reviewCount,incorrect:incorrectCount};$('filters').innerHTML=filters.map(([key,label])=>`<button class="filter ${state.filter===key?'active':''}" data-filter="${key}" aria-pressed="${state.filter===key}">${label}<em>${counts[key]}</em></button>`).join('');$('ranges').innerHTML=Array.from({length:pageCount},(_,i)=>{let a=i*pageSize+1,b=Math.min(state.count,(i+1)*pageSize);return `<button class="range ${state.range===i?'active':''}" data-range="${i}" aria-pressed="${state.range===i}">${a}–${b}</button>`}).join('');
+let start=state.range*pageSize+1,end=Math.min(state.count,start+pageSize-1),nums=[];for(let n=start;n<=end;n++)if(matches(n))nums.push(n);$('grid').innerHTML=nums.length?nums.map(n=>{let ans=state.answers[n],status=ans?(state.correctness[n]==='incorrect'?'incorrect':'correct'):'unattempted',rev=!!state.review[n];return `<article class="row ${rev?'review':''} ${status==='incorrect'?'incorrect-state':''}"><button class="correctness ${status==='incorrect'?'incorrect':''}" data-correct="${n}" aria-label="Question ${n}: ${status==='incorrect'?'incorrect':'correct'}" title="Toggle correct or incorrect" ${!ans?'disabled':''}>${status==='incorrect'?'×':'✓'}</button><button class="qnum ${ans?status:''} ${rev?'review':''}" data-review="${n}" aria-label="Question ${n}${rev?', marked for review':''}; toggle review" aria-pressed="${rev}" title="Toggle mark for review">${n}</button><div class="choices">${LETTERS.map(l=>`<button class="choice ${ans===l?'selected':''}" data-answer="${n}" data-option="${l}" aria-label="Question ${n}, option ${l}" aria-pressed="${ans===l}">${l}</button>`).join('')}</div></article>`}).join(''):'<div class="empty">No questions match this filter in the selected range.</div>';
+}
+ $('grid').addEventListener('click',e=>{let b=e.target.closest('button');if(!b)return;if(b.dataset.answer){let n=b.dataset.answer,l=b.dataset.option;if(state.answers[n]===l){delete state.answers[n];delete state.correctness[n]}else{state.answers[n]=l;state.correctness[n]='correct'}persist();render()}else if(b.dataset.correct){let n=b.dataset.correct;if(!state.answers[n])return;state.correctness[n]=state.correctness[n]==='incorrect'?'correct':'incorrect';persist();render()}else if(b.dataset.review){let n=b.dataset.review;state.review[n]?delete state.review[n]:state.review[n]=true;persist();render()}});
+$('filters').addEventListener('click',e=>{let b=e.target.closest('[data-filter]');if(b){state.filter=b.dataset.filter;persist();render()}});$('ranges').addEventListener('click',e=>{let b=e.target.closest('[data-range]');if(b){state.range=+b.dataset.range;persist();render()}});
+let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(render,120)});
+$('resetBtn').addEventListener('click',()=>{if(!window.confirm('Reset everything? This clears all answers, correctness marks, review flags and saved view settings from this browser.'))return;state={count:100,answers:{},correctness:{},review:{},filter:'all',range:0};try{localStorage.removeItem(KEY)}catch(e){}persist();render()});load();persist();render();
+})();
+</script></body></html>
